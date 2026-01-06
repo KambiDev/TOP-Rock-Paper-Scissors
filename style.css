@@ -1,0 +1,21 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.resultado{
+    width: 200px;
+    height: 200px;
+    border: 1px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -4,26 +4,12 @@ const getComputerChoice = () => {
 
     switch (aleatorio) {
         case 1:
-            return 'piedra';
+            return 'rock';
         case 2:
-            return 'papel';
+            return 'paper';
         case 3:
-            return 'tijera';
+            return 'scissors';
     }
-
-};
-
-
-const getHumanChoice = () => {
-
-    let usuario = prompt(
-    `Ingrese una opcion:
-    Piedra
-    Papel
-    Tijera`
-    );
-
-    return usuario.toLowerCase();
 };
 
 
@@ -31,59 +17,52 @@ const playGame = () => {
 
     let humanScore = 0;
     let computerScore = 0;
+    let roundsPlayed = 0;
 
     const playRound = (humanChoice, computerChoice) => {
 
         if (humanChoice === computerChoice){
-            alert('Empate');
-            return;
+            result.textContent = 'Round Result: It is a tie!';
         }
 
         if (
-            (humanChoice === 'piedra' && computerChoice === 'tijera') ||
-            (humanChoice === 'papel' && computerChoice === 'piedra') ||
-            (humanChoice === 'tijera' && computerChoice === 'papel')
+            (humanChoice === 'rock' && computerChoice === 'scissors') ||
+            (humanChoice === 'paper' && computerChoice === 'rock') ||
+            (humanChoice === 'scissors' && computerChoice === 'paper')
         ){
             humanScore++;
-            alert('has ganado un punto!');
+            result.textContent = 'Round Result: Human wins!';
         }else{
             computerScore++;
-            alert('la computadora ha ganado un punto');
+            result.textContent = 'Round Result: Computer wins!';
+        }
+
+        roundsPlayed++;
+
+        if (roundsPlayed === 5){
+            if (humanScore > computerScore){
+                result.textContent = `GAME OVER: You won! (${humanScore} - ${computerScore})`;
+            }else if (humanScore === computerScore){
+                result.textContent = `GAME OVER: Computer won! (${computerScore} - ${humanScore})`;
+            }else{
+                result.textContent = `GAME OVER: It was a total tie! (${humanScore} - ${computerScore})`;
+            }
+            humanScore = 0;
+            computerScore = 0;
+            roundsPlayed = 0;
         }
     };
 
-    //Ronda 1
-    let humanSelection = getHumanChoice();
-    let computerSelection = getComputerChoice();
-    playRound(humanSelection, computerSelection);
+    const btnRock = document.querySelector('.rock');
+    const btnPaper = document.querySelector('.paper');
+    const btnScissors = document.querySelector('.scissors');
+    const result = document.querySelector('.resultado');
 
-    //Ronda 2
-    humanSelection = getHumanChoice();
-    computerSelection = getComputerChoice();
-    playRound(humanSelection, computerSelection);
+    btnRock.addEventListener('click', () => playRound('rock', getComputerChoice()));
+    btnPaper.addEventListener('click', () => playRound('paper', getComputerChoice()));
+    btnScissors.addEventListener('click', () => playRound('scissors', getComputerChoice()));
 
-    //Ronda 3
-    humanSelection = getHumanChoice();
-    computerSelection = getComputerChoice();
-    playRound(humanSelection, computerSelection);
-
-    //Ronda 4
-    humanSelection = getHumanChoice();
-    computerSelection = getComputerChoice();
-    playRound(humanSelection, computerSelection);
-
-    //Ronda 5
-    humanSelection = getHumanChoice();
-    computerSelection = getComputerChoice();
-    playRound(humanSelection, computerSelection);
-
-    if (humanScore > computerScore){
-        alert('Has ganado!!!');
-    }else if (humanScore === computerScore){
-        alert('Es un empate!!!');
-    }else{
-        alert('La computadora ha ganado!!!');
-    }
 };
 
 playGame();
+
